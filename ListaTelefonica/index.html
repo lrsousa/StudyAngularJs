@@ -19,6 +19,9 @@
 		.form-control {
 			margin-top: 5px;
 		}
+		.btn {
+			margin-top: 5px;
+		}
 		.selecionado {
 			background-color: #B0E0E6;
 		}
@@ -64,7 +67,7 @@
 <body ng-controller="listaTelefonicaCtrl">
 	<div class="jumbotron">
 		<h3>{{app}}</h3>
-		<table class="table">
+		<table ng-show="contatos.length > 0" class="table">
 			<tr>
 				<th></th>
 				<th>Nome</th>
@@ -87,8 +90,8 @@
 			<option value="">Selecione uma Operadora</option>
 		</select>
 		<button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contato</button>
-		<button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-disabled="!isContatoSelecionado(contatos)">Apagar Contato</button>
-		{{contato}}
+		<button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-if="isContatoSelecionado(contatos)">Apagar Contato</button>
 	</div>
+	<div ng-include="'footer.html'"></div>
 </body>
 </html>
