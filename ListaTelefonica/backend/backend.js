@@ -7,10 +7,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var contatos = [
-	{nome : "Leonardo", telefone : "99887755", data: new Date(), operadora: {nome: "Tim", codigo: 41}},
-	{nome : "Carol", telefone : "12345678", data: new Date(), operadora: {nome: "Oi", codigo: 14}},
-	{nome : "Conchita", telefone : "98787998", data: new Date(), operadora: {nome: "Oi", codigo: 14}},
-	{nome : "Kenai", telefone : "13467985", data: new Date(), operadora: {nome: "Vivo", codigo: 15}}
+	{serial: '^#GT!', nome : "leonardo de sousA", telefone : "99887755", data: new Date(), operadora: {nome: "Tim", codigo: 41}},
+	{serial: '^%!@2', nome : "caroline minetto", telefone : "12345678", data: new Date(), operadora: {nome: "Oi", codigo: 14}},
+	{serial: '@(#*¨', nome : "conchita cahorro", telefone : "98787998", data: new Date(), operadora: {nome: "Oi", codigo: 14}},
+	{serial: '@¨#$@', nome : "kenai CACHORRO", telefone : "13467985", data: new Date(), operadora: {nome: "Vivo", codigo: 15}}
 ];
 var operadoras = [
 	{nome: "Oi", codigo: 14, categoria: "Celular", preco: 2},
