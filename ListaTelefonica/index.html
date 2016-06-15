@@ -9,91 +9,25 @@
 	<script src="lib/angular/angular.js"></script>
 	<script src="lib/angular/angular-locale_pt-br.js"></script>
 	<script src="lib/angular/angular-messages.js"></script>
+	<script src="lib/angular/angular-route.js"></script>
+	<script src="lib/serialGenerator/serialGenerator.js"></script>
+	<script src="lib/ui/ui.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/controllers/listaTelefonicaCtrl.js"></script>
+	<script src="js/controllers/novoContatoCtrl.js"></script>
+	<script src="js/controllers/detalhesContatoCtrl.js"></script>
 	<script src="js/services/contatosAPIService.js"></script>
 	<script src="js/services/operadorasAPIService.js"></script>
-	<script src="js/services/serialGeneratorService.js"></script>
 	<script src="js/config/serialGeneratorConfig.js"></script>
+	<script src="js/config/routeConfig.js"></script>
 	<script src="js/value/configValue.js"></script>
 	<script src="js/filters/nameFilter.js"></script>
 	<script src="js/filters/ellipsisFilter.js"></script>
 	<script src="js/directives/uiAlertDirective.js"></script>
 	<script src="js/directives/uiDateDirective.js"></script>
-	<script src="js/directives/uiAccordionDirective.js"></script>
 </head>
-<body ng-controller="listaTelefonicaCtrl">
-	<div class="jumbotron">
-		<h3>{{app}}</h3>
-
-		<ui-accordions>
-
-			<ui-accordion title="Accordion 1">
-				Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Quem num gosta di mé, boa gente num é. Pra lá , depois divoltis porris, paradis. Sapien in monti palavris qui num significa nadis i pareci latim. 
-			</ui-accordion>
-			<ui-accordion title="Accordion 2">
-				Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Pra lá , depois divoltis porris, paradis. Manduma pindureta quium dia nois paga. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. 
-			</ui-accordion>
-			<ui-accordion title="Accordion 3">
-				Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Delegadis gente finis, bibendum egestas augue arcu ut est. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Per aumento de cachacis, eu reclamis.				Mussum Ipsum, cacilds vidis litro abertis. Cevadis im ampola pa arma uma pindureta. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. Casamentiss faiz malandris se pirulitá. Mais vale um bebadis conhecidiss, que um alcoolatra anonimiss.
-			</ui-accordion>
-			<ui-accordion title="Accordion 4">
-				Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Delegadis gente finis, bibendum egestas augue arcu ut est. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Per aumento de cachacis, eu reclamis.
-			</ui-accordion>
-			<ui-accordion title="Accordion 5">
-				A ordem dos tratores não altera o pão duris Diuretics paradis num copo é motivis de denguis. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis. Interagi no mé, cursus quis, vehicula ac nisi.
-			</ui-accordion>
-		</ui-accordions>
-		<hr />
-
-		<input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?" />
-		<table ng-show="contatos.length > 0" class="table table-striped">
-			<tr>
-				<th></th>
-				<th>Serial</th>
-				<th><a href="" ng-click="ordenarPor('nome')">nome</a></th>
-				<th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
-				<th>Operadora</th>
-				<th>Data</th>
-			</tr>
-			<tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter: criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
-				<td><input type="checkbox" ng-model="contato.selecionado" /></td>
-				<td>{{contato.serial}}</td>
-				<td>{{contato.nome | name | ellipsis:10}}</td>
-				<td>{{contato.telefone}}</td>
-				<td>{{contato.operadora.nome | lowercase}}</td>
-				<td>{{contato.data | date: 'dd/MM/yyyy HH:mm'}}</td>				
-			</tr>
-		</table>
-		<hr/>
-		<form name="contatoForm">
-			<input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="10"/>
-			<input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/" />
-			<input class="form-control" type="text" ng-model="contato.data" name="data" placeholder="Data" ui-date /> 
-			<select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' )' group by operadora.categoria for operadora in operadoras | orderBy:'nome'">
-				<option value="">Selecione uma Operadora</option>
-			</select>	
-		</form>
-
-		<div ng-messages="contatoForm.nome.$error" ng-show="contatoForm.nome.$dirty">
-			<div ng-message="required" class="alert alert-danger">
-				Por favor, preencha o campo nome!
-			</div>
-			<div ng-message="minlength" class="alert alert-danger">
-				O campo nome deve ter no minimo 10 caracteres!
-			</div>
-		</div>
-		
-		<div class="alert alert-danger" ng-show="contatoForm.telefone.$error.required && contatoForm.telefone.$dirty">
-			Por favor, preencha o campo telefone!
-		</div>
-		<div class="alert alert-danger" ng-show="contatoForm.telefone.$error.pattern">
-			O campo telefone deve ter o formato XXXX-XXXX
-		</div>
-
-		<button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar Contato</button>
-		<button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-if="isContatoSelecionado(contatos)">Apagar Contato</button>
-	</div>
+<body>
+	<div ng-view></div>
 	<div ng-include="'view/footer.html'"></div>
 </body>
 </html>
