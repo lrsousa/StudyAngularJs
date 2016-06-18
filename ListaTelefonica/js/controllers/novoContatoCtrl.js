@@ -3,7 +3,6 @@ angular.module("listaTelefonica").controller("novoContatoCtrl", function($scope,
 
 	$scope.adicionarContato = function(contato) {
 		contato.serial = serialGenerator.generate();
-		contato.data = new Date();
 		contatosAPI.saveContato(contato).success(function(data) {
 			delete $scope.contato;
 			$scope.contatoForm.$setPristine();
